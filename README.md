@@ -1,4 +1,4 @@
-This project implements a `.NET Core Web API` using `SQLite`, which allows users to handle address data (meaning: street, number, zipcode, etc.). It also allows users to search and then sort the addresses that are added in the database, and can also calculate the distance between two given addresses. The distance is computed using the great-circle-distance formula between the `lat,lon` coordinates of the two addresses, which are obtained via geocoding using `NeutrinoAPI`. The projects supports Swagger UI. 
+This project implements a `.NET Core Web API` using `SQLite`, which allows users to handle address data (meaning: street, number, zipcode, etc.). It also allows users to search and then sort the addresses that are added in the database, and can also calculate the distance between two given addresses. The distance is computed using the great-circle-distance formula between the {latitude,longitude} coordinates of the two addresses, which are obtained via geocoding using `NeutrinoAPI`. The project supports Swagger UI. 
 
 The following are required to be installed (and can be downloaded via NuGet in VisualStudio): 
 - `NeutrinoAPI 3.6.0`
