@@ -39,7 +39,7 @@ namespace SocialBrothersAssignment.Controllers
 
             context.Addresses.Add(address);
             await context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetAddress), new { id = address.Id }, address);
+            return Ok(address);
         }
 
         [HttpGet("all")]
