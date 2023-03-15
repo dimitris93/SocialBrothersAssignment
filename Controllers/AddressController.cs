@@ -23,6 +23,7 @@ namespace SocialBrothersAssignment.Controllers
             this.context = context;
             this.client = new NeutrinoAPIClient("dimitris93", "uUFfga7sTqAST036W429hlPNE63vhHnCBYpzWGHzO6oYuhoj");
         }
+
         private bool AddressExists(long id)
         {
             return context.Addresses.Any(e => e.Id == id);
@@ -74,7 +75,7 @@ namespace SocialBrothersAssignment.Controllers
                                         (prop.GetValue(address, null) as string)?.ToLower() == q)).ToList();
 
             // Sort
-            addresses = addresses.OrderBy(i => i.GetType().GetProperty(sortby)?.GetValue(i, null)).ToList();
+            addresses = addresses.OrderBy(address => address.GetType().GetProperty(sortby)?.GetValue(address, null)).ToList();
             if(!asc)
             {
                 addresses.Reverse();
