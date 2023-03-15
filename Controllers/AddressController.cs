@@ -16,10 +16,13 @@ namespace SocialBrothersAssignment.Controllers
     public class AddressController : ControllerBase
     {
         private readonly DataContext context;
+        private readonly NeutrinoAPIClient client;
+
 
         public AddressController(DataContext context)
         {
             this.context = context;
+            this.client = new NeutrinoAPIClient("dimitris93", "uUFfga7sTqAST036W429hlPNE63vhHnCBYpzWGHzO6oYuhoj");
         }
 
         [HttpPost]
@@ -147,7 +150,6 @@ namespace SocialBrothersAssignment.Controllers
             string addressStr = String.Join(" ", new string[] { address.Street, address.HouseNumber, address.ZipCode, address.City, address.Country });
             string address2Str = String.Join(" ", new string[] { address2.Street, address2.HouseNumber, address2.ZipCode, address2.City, address2.Country });
 
-            var client = new NeutrinoAPIClient("dimitris93", "uUFfga7sTqAST036W429hlPNE63vhHnCBYpzWGHzO6oYuhoj");
             IGeolocation geolocation = client.Geolocation;
 
             var result = geolocation.GeocodeAddress(addressStr);
