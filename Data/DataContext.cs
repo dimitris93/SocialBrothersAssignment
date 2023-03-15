@@ -12,8 +12,4 @@ public class DataContext : DbContext
     {
         Database.EnsureCreated();
     }
-
-    //// The following configures EF to create a Sqlite database file in the specified folder
-    //protected override void OnConfiguring(DbContextOptionsBuilder options)
-    //    => options.UseSqlite($"Data Source={DbPath}");
 }

@@ -10,7 +10,6 @@ using System.Net;
 
 namespace SocialBrothersAssignment.Controllers
 {
-    //[Route("api/[controller]")]
     [Route("api/addresses")]
     [ApiController]
     public class AddressController : ControllerBase
@@ -23,6 +22,10 @@ namespace SocialBrothersAssignment.Controllers
         {
             this.context = context;
             this.client = new NeutrinoAPIClient("dimitris93", "uUFfga7sTqAST036W429hlPNE63vhHnCBYpzWGHzO6oYuhoj");
+        }
+        private bool AddressExists(long id)
+        {
+            return context.Addresses.Any(e => e.Id == id);
         }
 
         [HttpPost]
@@ -38,37 +41,13 @@ namespace SocialBrothersAssignment.Controllers
             return CreatedAtAction(nameof(GetAddress), new { id = address.Id }, address);
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<List<Address>>> GetAllAddresses()
         {
             return Ok(await context.Addresses.ToListAsync());
         }
 
-        [HttpGet("query")]
-        public async Task<IActionResult> GetAllAddresses(string query, string sortby="id", bool asc=true)
-        {
-            var addressProperties = typeof(Address).GetProperties();
-            var addresses = await context.Addresses.ToListAsync();
-            // Convert first letter to upper case
-            sortby = sortby[..1].ToUpper() + sortby[1..];
-            // Convert to lowercase
-            query = query.ToLower();
-
-            // Search
-            addresses = addresses.Where(address =>
-                                        addressProperties.Any(prop =>
-                                        (prop.GetValue(address, null) as string)?.ToLower() == query)).ToList();
-
-            // Sort
-            addresses = addresses.OrderBy(i => i.GetType().GetProperty(sortby)?.GetValue(i, null)).ToList();
-            if(!asc)
-            {
-                addresses.Reverse();
-            }
-            return Ok(addresses);
-        }
-        
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<ActionResult<Address>> GetAddress(long id)
         {
             var address = await context.Addresses.FindAsync(id);
@@ -79,7 +58,31 @@ namespace SocialBrothersAssignment.Controllers
             return Ok(address);
         }
 
-        [HttpPut("{id}")]
+        [HttpGet("query")]
+        public async Task<IActionResult> QueryAddresses(string q, string sortby="id", bool asc=true)
+        {
+            var addressProperties = typeof(Address).GetProperties();
+            var addresses = await context.Addresses.ToListAsync();
+            // Convert first letter to upper case
+            sortby = sortby[..1].ToUpper() + sortby[1..];
+            // Convert to lowercase
+            q = q.ToLower();
+
+            // Search
+            addresses = addresses.Where(address =>
+                                        addressProperties.Any(prop =>
+                                        (prop.GetValue(address, null) as string)?.ToLower() == q)).ToList();
+
+            // Sort
+            addresses = addresses.OrderBy(i => i.GetType().GetProperty(sortby)?.GetValue(i, null)).ToList();
+            if(!asc)
+            {
+                addresses.Reverse();
+            }
+            return Ok(addresses);
+        }    
+
+        [HttpPut]
         public async Task<IActionResult> PutAddress(long id, Address address)
         {            
             if (id != address.Id)
@@ -113,7 +116,7 @@ namespace SocialBrothersAssignment.Controllers
             return Ok(address);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteAddress(long id)
         {
             var address = await context.Addresses.FindAsync(id);
@@ -126,11 +129,6 @@ namespace SocialBrothersAssignment.Controllers
             await context.SaveChangesAsync();
 
             return Ok("Deleted.");
-        }
-
-        private bool AddressExists(long id)
-        {
-            return context.Addresses.Any(e => e.Id == id);
         }
 
         [HttpGet("calcDist")]

@@ -8,7 +8,7 @@ The following are required to be installed (and can be downloaded via NuGet in V
 The inlcuded SQLite database ([db_1.db](db_1.db)), contains 3 example addresses that can be used for testing purposes. The database path is set [here](appsettings.json#L3).
 
 Examples:
-- https://localhost:7235/api/addresses/query?query=Delft&sortby=houseNumber&asc=true
+- https://localhost:7235/api/addresses/query?q=Delft&sortby=houseNumber&asc=true
 - https://localhost:7235/api/addresses/calcDist?id=1&id2=3
 
 
