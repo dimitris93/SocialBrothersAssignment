@@ -5,7 +5,7 @@ The following are required to be installed (and can be downloaded via NuGet in V
 - `Microsoft.EntityFrameworkCore.Sqlite 7.0.3` 
 - `Swashbuckle.AspNetCore 6.2.3` 
 
-The inlcuded SQLite database ([db_1.db](db_1.db)), contains 3 example addresses that can be used for testing purposes. The database path is set [here](appsettings.json#L3).
+The inlcuded SQLite database ([db_1.db](db_1.db)), contains 3 example addresses that can be used for testing purposes. The database path is set [here](appsettings.json#L3). The `NeutrinoAPI` credentials need to be added [here](Controllers/AddressController.cs#L24).
 
 Examples:
 - https://localhost:7235/api/addresses/query?q=Delft&sortby=houseNumber&asc=true
